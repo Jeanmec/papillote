@@ -1,0 +1,12 @@
+{
+  "name": "@papillote/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@react-native/metro-config": "~0.79.3",
+    "react-native-svg": "~15.11.2",
+    "metro-config": "~0.82.4",
+    "react": "19.0.0",
+    "react-native": "~0.79.3"
+  }
+}
