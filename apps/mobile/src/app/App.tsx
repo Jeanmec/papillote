@@ -1,36 +1,46 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
-import React, { useRef, useState } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
+import { classes } from './styles/classes';
+import DeviceInfo from 'react-native-device-info';
+import { Introduction } from './components/Introduction';
 import { Hero } from './components/Hero';
-import { styles } from './styles/classes';
+import SetPasswordSection from './components/SetPasswordSection';
+import { storage } from './utils/mmkv';
+import ChangingColorOfLayers from './components/Confetti';
 
 export const App = () => {
-  const [whatsNextYCoord, setWhatsNextYCoord] = useState<number>(0);
-  const scrollViewRef = useRef<null | ScrollView>(null);
+  const [uniqueId, setUniqueId] = useState<string>('');
+
+  const [showIntro, setShowIntro] = useState<boolean | null>(null);
+
+  const passwordSet = storage.getBoolean('password_set') ?? false;
+
+  storage.clearAll();
+
+  useEffect(() => {
+    const fetchId = async () => {
+      const id = await DeviceInfo.getUniqueId();
+      setUniqueId(id);
+    };
+    fetchId();
+
+    setShowIntro(!(storage.getBoolean('introduction_completed') ?? false));
+  }, []);
+
+  const onCompleteIntro = () => {
+    storage.set('introduction_completed', true);
+    setShowIntro(false);
+  };
 
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          ref={(ref) => {
-            scrollViewRef.current = ref;
-          }}
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-        >
-          <Hero />
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={[classes.container]}>
+      <Hero />
+
+      {showIntro && <Introduction onComplete={onCompleteIntro} />}
+
+      {!showIntro && !passwordSet && <SetPasswordSection />}
+    </SafeAreaView>
   );
 };
+
 export default App;
