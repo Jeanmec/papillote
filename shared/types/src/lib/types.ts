@@ -1,4 +1,3 @@
-export type User = {
-  id: string;
-  code: string;
-};
+export function hello() {
+  return 'hello from shared types';
+}
