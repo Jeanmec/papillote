@@ -7,8 +7,11 @@
   "dependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
+    "@types/bcryptjs": "^2.4.6",
     "axios": "^1.6.0",
+    "bcryptjs": "^3.0.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "~0.79.3",

@@ -17,7 +17,8 @@
     "strict": true,
     "target": "es2022",
     "paths": {
-      "@papillote/types": ["shared/types/src/index.ts"]
+      "@papillote/types": ["shared/types/src/index.ts"],
+      "@papillote/validation": ["shared/validation/src/index.ts"]
     }
   }
 }

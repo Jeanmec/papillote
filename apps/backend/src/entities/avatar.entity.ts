@@ -1,4 +1,3 @@
-import type { TypeAvatar } from '@papillote/types';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('avatars')

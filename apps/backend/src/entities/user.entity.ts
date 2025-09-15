@@ -4,7 +4,7 @@ import { AvatarEntity } from './avatar.entity';
 @Entity('users')
 export class UserEntity {
   @Column({ primary: true, unique: true })
-  mobileId!: number;
+  mobileId!: string;
 
   @Column({ unique: true })
   generatedId!: string;
