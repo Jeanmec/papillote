@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../../entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { AuthCredentialsDto, LoginResponseDto } from '@papillote/validation';
 
 @Injectable()
 export class UserService {
@@ -30,7 +31,7 @@ export class UserService {
     return generatedId;
   }
 
-  async signUp(body: { mobileId: string; password: number | string }) {
+  async signUp(body: AuthCredentialsDto): Promise<LoginResponseDto> {
     const { mobileId, password } = body;
 
     const generatedId = await this.getUniqueGeneratedId();
@@ -46,10 +47,10 @@ export class UserService {
     const payload = { sub: generatedId };
     const token = this.jwtService.sign(payload);
 
-    return { access_token: token, generatedId };
+    return { access_token: token };
   }
 
-  async login(body: { mobileId: string; password: number }) {
+  async login(body: AuthCredentialsDto): Promise<LoginResponseDto> {
     const { mobileId, password } = body;
     const user = await this.userRepository.findOne({ where: { mobileId } });
     if (!user) {
@@ -64,6 +65,6 @@ export class UserService {
     const payload = { sub: user.generatedId };
     const token = this.jwtService.sign(payload);
 
-    return { access_token: token, generatedId: user.generatedId };
+    return { access_token: token };
   }
 }

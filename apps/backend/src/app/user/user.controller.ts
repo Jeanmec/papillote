@@ -9,40 +9,46 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Request } from 'express';
-
-import { UserEntity } from '../../entities/user.entity';
 import { UserService } from './user.service';
 
-import { createUserSchema } from '@papillote/validation';
+import {
+  createUserSchema,
+  AuthCredentialsDto,
+  UserProfileDto,
+  LoginResponseDto,
+} from '@papillote/validation';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { UserEntity } from '../../entities/user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('profile')
+  @Get()
   @UseGuards(JwtAuthGuard)
-  async getProfile(@Req() req: Request & { user?: UserEntity }) {
+  async getProfile(
+    @Req() req: Request & { user?: UserEntity }
+  ): Promise<UserProfileDto> {
     const user = req.user;
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
     return {
       generatedId: user.generatedId,
-      mobileId: user.mobileId,
-      avatarUrl: user.avatar,
+      avatar: user.avatar,
     };
   }
 
   @Post()
   @UsePipes(new ZodValidationPipe(createUserSchema))
-  async createUser(@Body() body: { mobileId: string; password: string }) {
+  async createUser(@Body() body: AuthCredentialsDto) {
     return this.userService.signUp(body);
   }
 
   @Post('login')
-  async login(@Body() body: { mobileId: string; password: number }) {
+  async login(@Body() body: AuthCredentialsDto): Promise<LoginResponseDto> {
     return this.userService.login(body);
   }
 }
