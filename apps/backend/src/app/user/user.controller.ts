@@ -7,6 +7,7 @@ import {
   UseGuards,
   Req,
   NotFoundException,
+  Param,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { UserService } from './user.service';
@@ -44,11 +45,16 @@ export class UserController {
   @Post()
   @UsePipes(new ZodValidationPipe(createUserSchema))
   async createUser(@Body() body: AuthCredentialsDto) {
-    return this.userService.signUp(body);
+    return await this.userService.signUp(body);
   }
 
   @Post('login')
   async login(@Body() body: AuthCredentialsDto): Promise<LoginResponseDto> {
-    return this.userService.login(body);
+    return await this.userService.login(body);
+  }
+
+  @Get('/check/:mobileId')
+  async check(@Param('mobileId') mobileId: string): Promise<boolean> {
+    return await this.userService.checkUserExistence(mobileId);
   }
 }

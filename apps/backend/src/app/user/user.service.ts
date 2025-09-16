@@ -67,4 +67,9 @@ export class UserService {
 
     return { access_token: token };
   }
+
+  async checkUserExistence(mobileId: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({ where: { mobileId } });
+    return !!user;
+  }
 }
