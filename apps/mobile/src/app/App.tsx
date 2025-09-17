@@ -2,43 +2,30 @@ import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { classes } from './styles/classes';
 import DeviceInfo from 'react-native-device-info';
-import { Introduction } from './components/Introduction';
+import { Introduction } from './components/sections/Introduction';
 import { Hero } from './components/Hero';
-import SetPasswordSection from './components/SetPasswordSection';
-import { storage } from './utils/mmkv';
-import ChangingColorOfLayers from './components/Confetti';
+import { checkUserExistence } from '../services/userService';
 
 export const App = () => {
-  const [uniqueId, setUniqueId] = useState<string>('');
-
-  const [showIntro, setShowIntro] = useState<boolean | null>(null);
-
-  const passwordSet = storage.getBoolean('password_set') ?? false;
-
-  storage.clearAll();
+  const [userExists, setUserExists] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const fetchId = async () => {
+    const checkUser = async () => {
       const id = await DeviceInfo.getUniqueId();
-      setUniqueId(id);
+      const exists = await checkUserExistence(id);
+      console.log({ exists }); // Debug log
+      setUserExists(exists);
     };
-    fetchId();
 
-    setShowIntro(!(storage.getBoolean('introduction_completed') ?? false));
+    checkUser();
   }, []);
-
-  const onCompleteIntro = () => {
-    storage.set('introduction_completed', true);
-    setShowIntro(false);
-  };
 
   return (
     <SafeAreaView style={[classes.container]}>
       <Hero />
+      <Introduction />
 
-      {showIntro && <Introduction onComplete={onCompleteIntro} />}
-
-      {!showIntro && !passwordSet && <SetPasswordSection />}
+      {/* {!passwordSet && <SetPassword />} */}
     </SafeAreaView>
   );
 };

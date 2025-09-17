@@ -114,3 +114,5 @@ yarn-error.log
 
 
 test-output
+
+.env

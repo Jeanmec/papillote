@@ -1,18 +1,18 @@
 import { View, Text } from 'react-native';
-import Card from './ui/Card';
+import Card from '../ui/Card';
 import { OtpInput } from 'react-native-otp-entry';
-import { primaryColor, secondaryColor } from '../styles/classes';
-import Confetti from './Confetti';
-import { use, useState } from 'react';
+import { secondaryColor } from '../../styles/classes';
+import Confetti from '../Confetti';
+import { useState } from 'react';
 
-export default function SetPasswordSection() {
+export default function SetPassword() {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   return (
     <>
       <Confetti trigger={triggerConfetti} />
       <Card
         cardData={{
-          image: require('../img/secure.png'),
+          image: require('../../img/secure.png'),
         }}
         onPressNext={() => setTriggerConfetti(true)}
         buttonText="Set password"

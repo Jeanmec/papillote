@@ -4,7 +4,11 @@
     "outDir": "dist",
     "types": ["node"],
     "rootDir": "src",
-    "baseUrl": "../../",
+    "baseUrl": ".",
+    "paths": {
+      "@papillote/validation": ["../../packages/shared/validation/src"],
+      "@papillote/types": ["../../packages/shared/types/src"]
+    },
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -27,5 +31,9 @@
     "src/test-setup.ts"
   ],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
-  "references": []
+  "references": [
+    {
+      "path": "../../shared/validation/tsconfig.lib.json"
+    }
+  ]
 }
