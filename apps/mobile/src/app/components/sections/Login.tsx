@@ -4,9 +4,37 @@ import { OtpInput } from 'react-native-otp-entry';
 import { secondaryColor } from '../../styles/classes';
 import Confetti from '../Confetti';
 import { useState } from 'react';
+import DeviceInfo from 'react-native-device-info';
+import { login } from 'src/services/userService';
+import { authService } from 'src/services/authService';
 
-export default function SetPassword() {
+interface LoginProps {
+  onAuthSuccess?: () => void;
+}
+
+export default function Login({ onAuthSuccess }: LoginProps) {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    const mobileId = await DeviceInfo.getUniqueId();
+    const loginResponse = await login({
+      mobileId,
+      password: Number(password),
+    });
+
+    if (loginResponse && loginResponse.access_token) {
+      authService.setAccessToken(loginResponse.access_token);
+      setTriggerConfetti(true);
+      console.log('Login successful and token stored');
+
+      if (onAuthSuccess) {
+        onAuthSuccess();
+      }
+    } else {
+      console.error('Login failed or no access token received');
+    }
+  };
   return (
     <>
       <Confetti trigger={triggerConfetti} />
@@ -14,8 +42,8 @@ export default function SetPassword() {
         cardData={{
           image: require('../../img/secure.png'),
         }}
-        onPressNext={() => setTriggerConfetti(true)}
-        buttonText="Set password"
+        onPressNext={() => handleLogin()}
+        buttonText="Login"
       >
         <View>
           <Text
@@ -26,7 +54,7 @@ export default function SetPassword() {
               marginTop: 20,
             }}
           >
-            Your account is linked to your device. Set a password to secure it.
+            Login
           </Text>
           <OtpInput
             numberOfDigits={5}
@@ -38,7 +66,7 @@ export default function SetPassword() {
               },
               focusedPinCodeContainerStyle: { borderColor: secondaryColor },
             }}
-            onTextChange={(text) => console.log(text)}
+            onTextChange={(text) => setPassword(text)}
           />
         </View>
       </Card>

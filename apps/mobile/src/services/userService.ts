@@ -5,15 +5,14 @@ import {
   LoginResponseDto,
 } from '@papillote/validation';
 
-export const getProfile = async (
-  token: string
-): Promise<UserProfileDto | null> => {
-  return await api.get<UserProfileDto>('/user', token);
+export const getProfile = async (): Promise<UserProfileDto | null> => {
+  return await api.get<UserProfileDto>('/user');
 };
 
 export const createUser = async (
   userData: AuthCredentialsDto
 ): Promise<LoginResponseDto | null> => {
+  console.log('userData', userData);
   return await api.post<AuthCredentialsDto, LoginResponseDto>(
     '/user',
     userData

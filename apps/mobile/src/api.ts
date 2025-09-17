@@ -1,15 +1,16 @@
 import axios, { AxiosError } from 'axios';
 // @ts-expect-error - react-native-dotenv module without types
 import { BACKEND_URL } from '@env';
+import { authService } from './services/authService';
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
 });
 
-async function get<T>(url: string, token?: string): Promise<T | null> {
+async function get<T>(url: string): Promise<T | null> {
   try {
-    console.log(`${BACKEND_URL}${url}`);
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const authToken = authService.getAccessToken();
+    const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.get<{ response: T }>(
       `${BACKEND_URL}${url}`,
       { headers }
@@ -26,13 +27,10 @@ async function get<T>(url: string, token?: string): Promise<T | null> {
   }
 }
 
-async function post<T, R>(
-  url: string,
-  data: T,
-  token?: string
-): Promise<R | null> {
+async function post<T, R>(url: string, data: T): Promise<R | null> {
   try {
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const authToken = authService.getAccessToken();
+    const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.post<{ response: R }>(
       `${BACKEND_URL}${url}`,
       data,
