@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export const Hero = () => {
+export default function Hero() {
   return (
     <View>
       <Text style={styles.title}>Papillote!</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   title: {

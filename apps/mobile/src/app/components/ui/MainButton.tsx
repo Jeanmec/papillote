@@ -7,7 +7,7 @@ type ButtonProps = {
   onPress: () => void;
 };
 
-export const MainButton: React.FC<ButtonProps> = ({ title, onPress }) => {
+export default function MainButton({ title, onPress }: ButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
   return (
@@ -16,7 +16,7 @@ export const MainButton: React.FC<ButtonProps> = ({ title, onPress }) => {
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       style={({ pressed }) => {
-        let baseStyle: ViewStyle = {
+        const baseStyle: ViewStyle = {
           ...styles.button,
           backgroundColor: pressed ? primaryColor : secondaryColor,
           boxShadow: isPressed ? '2px 2px 0 #422800' : '4px 4px 0 #422800',
@@ -29,7 +29,7 @@ export const MainButton: React.FC<ButtonProps> = ({ title, onPress }) => {
       <Text style={styles.text}>{title}</Text>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   button: {

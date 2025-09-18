@@ -1,10 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Text } from 'react-native';
-import { styles } from '../styles/classes';
 import DeviceInfo from 'react-native-device-info';
-import { Tag } from './ui/Tag';
+import Tag from './ui/Tag';
 
-export const App = () => {
+export default function App() {
   const [uniqueId, setUniqueId] = useState<string>('');
   useEffect(() => {
     const fetchId = async () => {
@@ -16,5 +14,4 @@ export const App = () => {
   }, []);
 
   return <Tag color="purple">{uniqueId}</Tag>;
-};
-export default App;
+}

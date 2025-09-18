@@ -2,10 +2,10 @@ import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { View, Animated } from 'react-native';
 import { TabBar } from './navigation/TabBar';
 import { SwipeableView } from './navigation/SwipeableView';
-import { GiftSection } from './sections/GiftSection';
-import { ProfileSection } from './sections/ProfileSection';
+import GiftSection from './sections/GiftSection';
+import ProfileSection from './sections/ProfileSection';
 
-export const Home = () => {
+export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
 
@@ -39,4 +39,4 @@ export const Home = () => {
       />
     </View>
   );
-};
+}

@@ -4,7 +4,7 @@ import { classes } from '../../styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
 import { useState } from 'react';
 
-export const ProfileSection = () => {
+export default function ProfileSection() {
   const [userId, setUserId] = useState('');
 
   return (
@@ -106,7 +106,7 @@ export const ProfileSection = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   profileCard: {

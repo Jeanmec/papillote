@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const GiftSection = () => {
+export default function GiftSection() {
   return (
     <SafeAreaView style={[classes.container]}>
       <ScrollView
@@ -96,4 +96,4 @@ export const GiftSection = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}

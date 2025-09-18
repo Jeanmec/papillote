@@ -1,7 +1,7 @@
 import UserId from './UserId';
 import { Text, View } from 'react-native';
 
-export const UserIdSection = () => {
+export default function UserIdSection() {
   return (
     <>
       <View>
@@ -13,5 +13,4 @@ export const UserIdSection = () => {
       <UserId />
     </>
   );
-};
-export default UserIdSection;
+}

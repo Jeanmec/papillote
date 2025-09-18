@@ -4,7 +4,7 @@ import DeviceInfo from 'react-native-device-info';
 import { authService } from '../../services/authService';
 import { checkUserExistence } from '../../services/userService';
 import { IntroductionLayout } from '../layouts/IntroductionLayout';
-import { Hero } from '../components/Hero';
+import Hero from '../components/Hero';
 import SetUserPassword from '../components/sections/SetUserPassword';
 import Login from '../components/sections/Login';
 import { classes } from '../styles/classes';
@@ -13,7 +13,7 @@ interface AuthGuardProps {
   children: React.ReactNode;
 }
 
-export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
+export default function AuthGuard({ children }: AuthGuardProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [userExists, setUserExists] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,4 +75,4 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-};
+}

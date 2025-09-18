@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { styles } from '../../styles/classes';
+import { classes } from 'src/app/styles/classes';
 
 const colors = {
   red: {
@@ -33,17 +33,17 @@ const colors = {
   },
 };
 
-export const Tag = ({
+export default function Tag({
   children,
   color,
 }: {
   children: React.ReactNode;
   color: keyof typeof colors;
-}) => {
+}) {
   return (
     <Text
       style={[
-        styles.tag,
+        classes.tag,
         {
           backgroundColor: colors[color].background,
           color: colors[color].text,
@@ -53,4 +53,4 @@ export const Tag = ({
       {children}
     </Text>
   );
-};
+}
