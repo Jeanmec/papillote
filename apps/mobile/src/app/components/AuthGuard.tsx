@@ -43,16 +43,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   useEffect(() => {
     checkAuthStatus();
-
-    const interval = setInterval(() => {
-      const hasToken = authService.hasAccessToken();
-      if (hasToken !== isAuthenticated) {
-        checkAuthStatus();
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [checkAuthStatus, isAuthenticated]);
+  }, [checkAuthStatus]);
 
   const handleAuthSuccess = useCallback(() => {
     setIsAuthenticated(true);

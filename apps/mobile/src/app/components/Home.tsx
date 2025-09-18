@@ -1,29 +1,42 @@
-import { View, Text } from 'react-native';
-import { SafeAreaView } from 'react-native';
-import { classes } from '../styles/classes';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
+import { View, Animated } from 'react-native';
+import { TabBar } from './navigation/TabBar';
+import { SwipeableView } from './navigation/SwipeableView';
+import { GiftSection } from './sections/GiftSection';
+import { ProfileSection } from './sections/ProfileSection';
 
 export const Home = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  const handleTabPress = useCallback((index: number) => {
+    setActiveTab(index);
+  }, []);
+
+  const handleSwipeChange = useCallback((index: number) => {
+    setActiveTab(index);
+  }, []);
+
+  const sections = useMemo(
+    () => [<GiftSection key="gift" />, <ProfileSection key="profile" />],
+    []
+  );
+
   return (
-    <SafeAreaView style={[classes.container]}>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 20,
-        }}
+    <View style={{ flex: 1, backgroundColor: '#f8f9fa' }}>
+      <SwipeableView
+        activeIndex={activeTab}
+        onIndexChange={handleSwipeChange}
+        animatedValue={animatedValue}
       >
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginBottom: 20,
-          }}
-        >
-          Hello word !
-        </Text>
-      </View>
-    </SafeAreaView>
+        {sections}
+      </SwipeableView>
+
+      <TabBar
+        activeTab={activeTab}
+        onTabPress={handleTabPress}
+        animatedValue={animatedValue}
+      />
+    </View>
   );
 };

@@ -45,29 +45,36 @@ export default function Login({ onAuthSuccess }: LoginProps) {
         onPressNext={() => handleLogin()}
         buttonText="Login"
       >
-        <View>
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               fontWeight: 'bold',
               fontSize: 24,
               textAlign: 'center',
-              marginTop: 20,
             }}
           >
             Login
           </Text>
-          <OtpInput
-            numberOfDigits={5}
-            theme={{
-              filledPinCodeContainerStyle: { borderColor: '#e8e8e8' },
-              pinCodeContainerStyle: {
-                borderRadius: 15,
-                borderWidth: 3,
-              },
-              focusedPinCodeContainerStyle: { borderColor: secondaryColor },
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            onTextChange={(text) => setPassword(text)}
-          />
+          >
+            <OtpInput
+              numberOfDigits={5}
+              theme={{
+                filledPinCodeContainerStyle: { borderColor: '#e8e8e8' },
+                pinCodeContainerStyle: {
+                  borderRadius: 15,
+                  borderWidth: 3,
+                },
+                focusedPinCodeContainerStyle: { borderColor: secondaryColor },
+              }}
+              onTextChange={(text) => setPassword(text)}
+            />
+          </View>
         </View>
       </Card>
     </>

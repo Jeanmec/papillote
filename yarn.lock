@@ -10780,6 +10780,13 @@ react-native-dotenv@^3.4.11:
   dependencies:
     dotenv "^16.4.5"
 
+react-native-ico-noto-emojis@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-ico-noto-emojis/-/react-native-ico-noto-emojis-5.1.2.tgz#a6b22956d760555b6e8c75ee288932ed766427a9"
+  integrity sha512-4tuf9O+NdKspSVmcJCMMx59blR1iziCcJwVtZxK08dg63LyY8G01vcBtfbdQTcUL3vKHiiYEDrtkyWbKjzj2pQ==
+  dependencies:
+    react-svg-main "^4.0.1"
+
 react-native-mmkv@^3.3.1:
   version "3.3.1"
   resolved "https://registry.npmjs.org/react-native-mmkv/-/react-native-mmkv-3.3.1.tgz"
@@ -10804,6 +10811,14 @@ react-native-svg-web@~1.0.9:
   version "1.0.9"
   resolved "https://registry.npmjs.org/react-native-svg-web/-/react-native-svg-web-1.0.9.tgz"
   integrity sha512-fggz1MPx55xP92ZlFWhvxfsd8/Mj3z63E1eo1pldtBRuNbR4LffvtY9hwj96bgHZU3gRwJL00LV3GAWRFthlnA==
+
+react-native-svg@^13.13.0:
+  version "13.14.1"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.14.1.tgz#265ec50b57dc042b8b8bd55d03aaf394d1ba9f7a"
+  integrity sha512-0DSa0EOySzV0J9utmRFVE5Vr4mKRXA7GtH1Ga1B6fzR967HGFW1ytH6hmnOf36316hjYpXMMB7s4oVe1FqghlQ==
+  dependencies:
+    css-select "^5.1.0"
+    css-tree "^1.1.3"
 
 react-native-svg@~15.11.2:
   version "15.11.2"
@@ -10879,6 +10894,13 @@ react-refresh@^0.14.0:
   version "0.14.2"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.14.2.tgz"
   integrity sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==
+
+react-svg-main@^4.0.1:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-svg-main/-/react-svg-main-4.0.2.tgz#809092d6f91a991206e4d814faec8226bd0d89eb"
+  integrity sha512-IP07Ihu6ZJ+VS1Vcm9OWz7324cVz9D/HUFTMKTkNvWkB2DN5m+vH2S4O6d466i24+oVZ2gDalTa/i/XasSKOGQ==
+  dependencies:
+    react-native-svg "^13.13.0"
 
 react@19.0.0:
   version "19.0.0"

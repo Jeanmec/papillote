@@ -9,6 +9,7 @@
     "metro-config": "~0.82.4",
     "react": "19.0.0",
     "react-native": "~0.79.3",
+    "react-native-ico-noto-emojis": "^5.1.2",
     "react-native-mmkv": "^3.3.1",
     "react-native-otp-entry": "^1.8.5",
     "react-native-svg": "~15.11.2"

@@ -1,4 +1,3 @@
-// apps/forgive-front/tsconfig.spec.json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
