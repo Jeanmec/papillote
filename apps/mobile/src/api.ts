@@ -9,6 +9,16 @@ const axiosInstance = axios.create({
 
 console.log('API base URL:', BACKEND_URL);
 
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      authService.removeAccessToken();
+    }
+    return Promise.reject(error);
+  }
+);
+
 async function get<T>(url: string): Promise<T | null> {
   try {
     const authToken = authService.getAccessToken();

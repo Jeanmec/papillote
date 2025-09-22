@@ -5,7 +5,7 @@ import { authService } from '../../services/authService';
 import { checkUserExistence } from '../../services/userService';
 import { IntroductionLayout } from '../layouts/IntroductionLayout';
 import Hero from '../components/Hero';
-import SetUserPassword from '../components/sections/SetUserPassword';
+import Register from '../components/sections/Register';
 import Login from '../components/sections/Login';
 import { classes } from '../styles/classes';
 
@@ -16,16 +16,13 @@ interface AuthGuardProps {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [userExists, setUserExists] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const checkAuthStatus = useCallback(async () => {
     try {
-      setIsLoading(true);
       const hasToken = authService.hasAccessToken();
 
       if (hasToken) {
         setIsAuthenticated(true);
-        setIsLoading(false);
         return;
       }
 
@@ -33,11 +30,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       const exists = await checkUserExistence(mobileId);
       setUserExists(exists);
       setIsAuthenticated(false);
-      setIsLoading(false);
     } catch (error) {
       console.error('Error checking auth status:', error);
       setIsAuthenticated(false);
-      setIsLoading(false);
     }
   }, []);
 
@@ -49,16 +44,6 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     setIsAuthenticated(true);
   }, []);
 
-  if (isLoading) {
-    return (
-      <IntroductionLayout>
-        <SafeAreaView style={[classes.container]}>
-          <Hero />
-        </SafeAreaView>
-      </IntroductionLayout>
-    );
-  }
-
   if (!isAuthenticated) {
     return (
       <IntroductionLayout>
@@ -67,7 +52,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
           {userExists === true ? (
             <Login onAuthSuccess={handleAuthSuccess} />
           ) : (
-            <SetUserPassword onAuthSuccess={handleAuthSuccess} />
+            <Register onAuthSuccess={handleAuthSuccess} />
           )}
         </SafeAreaView>
       </IntroductionLayout>
