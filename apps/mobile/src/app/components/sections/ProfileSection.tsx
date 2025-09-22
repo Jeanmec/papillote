@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native';
 import { classes } from '../../styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
 import { useState } from 'react';
+import UserIdSection from '../UserIdSection';
 
 export default function ProfileSection() {
   const [userId, setUserId] = useState('');
@@ -22,10 +23,7 @@ export default function ProfileSection() {
           <View style={classes.avatar}>
             <Icon name="technologist" height={32} width={32} />
           </View>
-          <View>
-            <Text>Votre identifiant : </Text>
-            <Text>{userId}</Text>
-          </View>
+          <UserIdSection />
           <Text style={styles.userName}>Utilisateur</Text>
           <Text style={styles.memberSince}>Membre depuis aujourd'hui</Text>
         </View>

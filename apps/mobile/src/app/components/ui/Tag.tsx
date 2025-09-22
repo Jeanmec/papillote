@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
+import Icon from 'react-native-ico-noto-emojis';
 import { classes } from 'src/app/styles/classes';
+import * as Clipboard from '@react-native-clipboard/clipboard';
 
 const colors = {
   red: {
@@ -36,21 +38,35 @@ const colors = {
 export default function Tag({
   children,
   color,
+  copy,
 }: {
   children: React.ReactNode;
   color: keyof typeof colors;
+  copy?: string;
 }) {
+  const handleCopy = () => {
+    if (copy && typeof copy === 'string') {
+      Clipboard.default.setString(copy);
+    }
+  };
+
   return (
     <Text
+      onPress={copy ? handleCopy : undefined}
       style={[
         classes.tag,
         {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          gap: 2,
           backgroundColor: colors[color].background,
           color: colors[color].text,
         },
       ]}
     >
       {children}
+      {copy && <Icon name="spiral-notepad" height={16} width={16} />}
     </Text>
   );
 }

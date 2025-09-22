@@ -7,6 +7,8 @@ const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
 });
 
+console.log('API base URL:', BACKEND_URL);
+
 async function get<T>(url: string): Promise<T | null> {
   try {
     const authToken = authService.getAccessToken();
