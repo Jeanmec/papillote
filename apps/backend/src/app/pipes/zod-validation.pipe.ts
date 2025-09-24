@@ -1,5 +1,6 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 import { ZodError, ZodType } from 'zod';
+import { getZodErrorMessages } from '@papillote/validation';
 
 @Injectable()
 export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
@@ -10,22 +11,15 @@ export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
       this.schema.parse(value);
     } catch (error) {
       if (error instanceof ZodError) {
-        const errors = {};
+        const errorMessages = getZodErrorMessages(
+          error,
+          value as Record<string, unknown>
+        );
 
-        error.issues.forEach((issue) => {
-          let errorMessage = issue.message;
+        const errors: Record<string, string> = {};
+        error.issues.forEach((issue, index) => {
           const field = String(issue.path[0]);
-          if (issue.code === 'invalid_type') {
-            if (issue.path.length > 0 && issue.path[0]) {
-              if (!value[issue.path[0]]) {
-                errorMessage = `Field: ${field} is required`;
-              } else {
-                errorMessage = `Field: ${field} expect ${issue.expected}`;
-              }
-            }
-          }
-
-          errors[field] = errorMessage;
+          errors[field] = errorMessages[index] || issue.message;
         });
 
         throw new BadRequestException({

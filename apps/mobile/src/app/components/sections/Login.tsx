@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Card from '../ui/Card';
 import { OtpInput } from 'react-native-otp-entry';
 import { secondaryColor } from '../../styles/classes';

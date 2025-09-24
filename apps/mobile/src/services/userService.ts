@@ -3,6 +3,7 @@ import {
   AuthCredentialsDto,
   UserProfileDto,
   LoginResponseDto,
+  createUserSchema,
 } from '@papillote/validation';
 
 export const getProfile = async (): Promise<UserProfileDto | null> => {
@@ -12,10 +13,10 @@ export const getProfile = async (): Promise<UserProfileDto | null> => {
 export const createUser = async (
   userData: AuthCredentialsDto
 ): Promise<LoginResponseDto | null> => {
-  console.log('userData', userData);
   return await api.post<AuthCredentialsDto, LoginResponseDto>(
     '/user',
-    userData
+    userData,
+    createUserSchema
   );
 };
 

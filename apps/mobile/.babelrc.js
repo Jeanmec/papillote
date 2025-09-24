@@ -22,6 +22,7 @@ module.exports = function (api) {
       ['module:@react-native/babel-preset', { useTransformReactJSX: true }],
     ],
     plugins: [
+      '@babel/plugin-transform-export-namespace-from',
       [
         'module:react-native-dotenv',
         {
