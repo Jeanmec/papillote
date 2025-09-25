@@ -1,32 +1,54 @@
 import React, { useState } from 'react';
-import { Text, Pressable, StyleSheet, ViewStyle } from 'react-native';
+import {
+  Text,
+  Pressable,
+  StyleSheet,
+  ViewStyle,
+  ActivityIndicator,
+} from 'react-native';
 import { primaryColor, secondaryColor } from '../../styles/classes';
 
 type ButtonProps = {
-  title: string;
-  onPress: () => void;
+  label: string;
+  onPress: () => void | Promise<void>;
 };
 
-export default function MainButton({ title, onPress }: ButtonProps) {
+export default function MainButton({ label, onPress }: ButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePress = async () => {
+    if (isLoading) return;
+
+    try {
+      setIsLoading(true);
+      await onPress();
+    } catch (error) {
+      console.error('Button action failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getButtonStyle = (pressed: boolean): ViewStyle => ({
+    ...styles.button,
+    backgroundColor: pressed && !isLoading ? primaryColor : secondaryColor,
+    boxShadow: isPressed ? '2px 2px 0 #422800' : '4px 4px 0 #422800',
+    transform: isPressed ? [{ translateX: 2 }, { translateY: 2 }] : [],
+    opacity: isLoading ? 0.7 : 1,
+  });
 
   return (
     <Pressable
-      onPress={onPress}
-      onPressIn={() => setIsPressed(true)}
+      onPress={handlePress}
+      onPressIn={() => !isLoading && setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      style={({ pressed }) => {
-        const baseStyle: ViewStyle = {
-          ...styles.button,
-          backgroundColor: pressed ? primaryColor : secondaryColor,
-          boxShadow: isPressed ? '2px 2px 0 #422800' : '4px 4px 0 #422800',
-          transform: isPressed ? [{ translateX: 2 }, { translateY: 2 }] : [],
-        };
-
-        return baseStyle;
-      }}
+      disabled={isLoading}
+      style={({ pressed }) => getButtonStyle(pressed)}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>
+        {isLoading ? <ActivityIndicator /> : label}
+      </Text>
     </Pressable>
   );
 }

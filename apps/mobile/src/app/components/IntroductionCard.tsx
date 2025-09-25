@@ -1,6 +1,5 @@
 import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
 import { classes } from '../styles/classes';
-import MainButton from './ui/MainButton';
 import Card from './ui/Card';
 
 type IntroductionCardProps = {

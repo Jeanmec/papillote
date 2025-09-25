@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Image, StyleSheet } from 'react-native';
 import { classes } from '../../styles/classes';
 import MainButton from './MainButton';
 
@@ -7,7 +7,7 @@ type CardProps = {
     image: number;
   };
   children?: React.ReactNode;
-  onPressNext?: () => void;
+  onPressNext?: () => void | Promise<void>;
   buttonText?: string;
 };
 
@@ -23,7 +23,7 @@ export default function Card({
       {children}
       {buttonText && onPressNext && (
         <View style={styles.textSection}>
-          <MainButton title={buttonText} onPress={onPressNext} />
+          <MainButton label={buttonText} onPress={onPressNext} />
         </View>
       )}
     </SafeAreaView>
