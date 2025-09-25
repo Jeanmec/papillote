@@ -33,7 +33,7 @@ export default function MainButton({ label, onPress }: ButtonProps) {
   const getButtonStyle = (pressed: boolean): ViewStyle => ({
     ...styles.button,
     backgroundColor: pressed && !isLoading ? primaryColor : secondaryColor,
-    boxShadow: isPressed ? '2px 2px 0 #422800' : '4px 4px 0 #422800',
+    boxShadow: isPressed ? '2px 2px 0 #090042' : '4px 4px 0 #1f0042',
     transform: isPressed ? [{ translateX: 2 }, { translateY: 2 }] : [],
     opacity: isLoading ? 0.7 : 1,
   });

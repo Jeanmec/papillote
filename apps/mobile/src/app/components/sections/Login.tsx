@@ -6,7 +6,7 @@ import Confetti from '../Confetti';
 import { useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { login } from 'src/services/userService';
-import { authService } from 'src/services/authService';
+import { useAuthStore } from '../../store/authStore';
 
 interface LoginProps {
   onAuthSuccess?: () => void;
@@ -15,6 +15,7 @@ interface LoginProps {
 export default function Login({ onAuthSuccess }: LoginProps) {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [password, setPassword] = useState('');
+  const { setAccessToken } = useAuthStore();
 
   const handleLogin = async () => {
     const mobileId = await DeviceInfo.getUniqueId();
@@ -24,7 +25,7 @@ export default function Login({ onAuthSuccess }: LoginProps) {
     });
 
     if (loginResponse && loginResponse.access_token) {
-      authService.setAccessToken(loginResponse.access_token);
+      setAccessToken(loginResponse.access_token);
       setTriggerConfetti(true);
       console.log('Login successful and token stored');
 

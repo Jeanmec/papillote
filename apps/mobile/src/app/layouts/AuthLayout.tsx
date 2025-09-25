@@ -8,13 +8,13 @@ import {
 } from 'react';
 import { SafeAreaView } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { authService } from '../../services/authService';
 import { checkUserExistence, getProfile } from '../../services/userService';
 import { UserProfileDto } from '@papillote/validation';
 import Hero from '../components/Hero';
 import Register from '../components/sections/Register';
 import Login from '../components/sections/Login';
 import { classes } from '../styles/classes';
+import { useAuthStore } from '../store/authStore';
 
 const AuthContext = createContext<UserProfileDto | null>(null);
 
@@ -30,10 +30,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [userExists, setUserExists] = useState<boolean | null>(null);
   const [user, setUser] = useState<UserProfileDto | null>(null);
+  const { hasAccessToken, removeAccessToken } = useAuthStore();
 
   const checkAuthStatus = useCallback(async () => {
     try {
-      const hasToken = authService.hasAccessToken();
+      const hasToken = hasAccessToken();
 
       if (hasToken) {
         const profile = await getProfile();
@@ -42,7 +43,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           setIsAuthenticated(true);
           return;
         } else {
-          authService.removeAccessToken();
+          removeAccessToken();
         }
       }
 
@@ -51,10 +52,10 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       setUserExists(exists);
       setIsAuthenticated(false);
     } catch {
-      authService.removeAccessToken();
+      removeAccessToken();
       setIsAuthenticated(false);
     }
-  }, []);
+  }, [hasAccessToken, removeAccessToken]);
 
   useEffect(() => {
     checkAuthStatus();

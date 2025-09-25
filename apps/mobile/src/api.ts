@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 // @ts-expect-error - react-native-dotenv module without types
 import { BACKEND_URL } from '@env';
-import { authService } from './services/authService';
+import { useAuthStore } from './app/store/authStore';
 import Toast from 'react-native-toast-message';
 import { ZodType } from 'zod';
 import { getZodErrorMessages } from '@papillote/validation';
@@ -16,7 +16,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      authService.removeAccessToken();
+      useAuthStore.getState().removeAccessToken();
     }
     return Promise.reject(error);
   }
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
 
 async function get<T>(url: string, schema?: ZodType<T>): Promise<T | null> {
   try {
-    const authToken = authService.getAccessToken();
+    const authToken = useAuthStore.getState().accessToken;
     const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.get<{ response: T }>(
       `${BACKEND_URL}${url}`,
@@ -96,7 +96,7 @@ async function post<T, R>(
       }
     }
 
-    const authToken = authService.getAccessToken();
+    const authToken = useAuthStore.getState().accessToken;
     const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.post<{ response: R }>(
       `${BACKEND_URL}${url}`,

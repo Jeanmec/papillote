@@ -2,11 +2,18 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { classes } from '../../styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
-import { useState } from 'react';
 import UserIdSection from '../UserIdSection';
+import MainButton from '../ui/MainButton';
+import { useAuthStore } from '../../store/authStore';
+import { DevSettings } from 'react-native';
 
 export default function ProfileSection() {
-  const [userId, setUserId] = useState('');
+  const { removeAccessToken } = useAuthStore();
+
+  const handleLogout = async () => {
+    removeAccessToken();
+    DevSettings.reload();
+  };
 
   return (
     <SafeAreaView style={[classes.container]}>
@@ -99,6 +106,10 @@ export default function ProfileSection() {
           <Text style={classes.sectionDescription}>
             Notifications activées • Version 1.0.0
           </Text>
+
+          <View style={styles.logoutButtonContainer}>
+            <MainButton label="Se déconnecter" onPress={handleLogout} />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -161,5 +172,8 @@ const styles = StyleSheet.create({
   },
   settingsTitle: {
     color: '#2d3436',
+  },
+  logoutButtonContainer: {
+    marginTop: 15,
   },
 });

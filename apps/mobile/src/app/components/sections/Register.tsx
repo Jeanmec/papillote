@@ -6,7 +6,7 @@ import Confetti from '../Confetti';
 import { useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
 import { createUser } from 'src/services/userService';
-import { authService } from 'src/services/authService';
+import { useAuthStore } from '../../store/authStore';
 
 interface RegisterProps {
   onAuthSuccess?: () => void;
@@ -15,6 +15,7 @@ interface RegisterProps {
 export default function Register({ onAuthSuccess }: RegisterProps) {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [password, setPassword] = useState('');
+  const { setAccessToken } = useAuthStore();
 
   const handleRegister = async () => {
     const mobileId = await DeviceInfo.getUniqueId();
@@ -24,7 +25,7 @@ export default function Register({ onAuthSuccess }: RegisterProps) {
     });
 
     if (userCreation && userCreation.access_token) {
-      authService.setAccessToken(userCreation.access_token);
+      setAccessToken(userCreation.access_token);
       setTriggerConfetti(true);
 
       if (onAuthSuccess) {
