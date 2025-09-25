@@ -1,22 +1,12 @@
-import { useState, useEffect } from 'react';
 import Tag from './ui/Tag';
-import { getProfile } from 'src/services/userService';
+import { useAuth } from '../layouts/AuthLayout';
 
-export default function App() {
-  const [generatedId, setGeneratedId] = useState<string>('');
-  useEffect(() => {
-    const fetchId = async () => {
-      const currentUser = await getProfile();
-      if (currentUser?.generatedId) {
-        setGeneratedId(currentUser.generatedId);
-      }
-    };
-    fetchId();
-  }, []);
+export default function UserId() {
+  const user = useAuth();
 
   return (
-    <Tag color="purple" copy={generatedId}>
-      {generatedId}
+    <Tag color="purple" copy={user?.generatedId || ''}>
+      {user?.generatedId || ''}
     </Tag>
   );
 }

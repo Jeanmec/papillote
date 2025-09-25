@@ -24,7 +24,6 @@ export default function ProfileSection() {
             <Icon name="technologist" height={32} width={32} />
           </View>
           <UserIdSection />
-          <Text style={styles.userName}>Utilisateur</Text>
           <Text style={styles.memberSince}>Membre depuis aujourd'hui</Text>
         </View>
 
@@ -109,6 +108,7 @@ export default function ProfileSection() {
 const styles = StyleSheet.create({
   profileCard: {
     backgroundColor: '#6c5ce7',
+    gap: 10,
   },
   userName: {
     fontSize: 22,

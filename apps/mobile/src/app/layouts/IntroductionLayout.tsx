@@ -51,12 +51,10 @@ export function IntroductionLayout({ children }: IntroductionLayoutProps) {
 
   return (
     <View style={styles.container}>
-      {/* Contenu principal */}
       <View style={[styles.content, showIntro && styles.contentHidden]}>
         {children}
       </View>
 
-      {/* Introduction overlay */}
       {showIntro && (
         <View style={styles.introductionOverlay}>
           <IntroductionCard

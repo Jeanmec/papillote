@@ -1,4 +1,5 @@
-import AuthGuard from './components/AuthGuard';
+import { IntroductionLayout } from './layouts/IntroductionLayout';
+import { AuthLayout } from './layouts/AuthLayout';
 import Home from './components/Home';
 import Toast from 'react-native-toast-message';
 import toastConfig from './config/toastConfig';
@@ -6,9 +7,11 @@ import toastConfig from './config/toastConfig';
 export default function App() {
   return (
     <>
-      <AuthGuard>
-        <Home />
-      </AuthGuard>
+      <IntroductionLayout>
+        <AuthLayout>
+          <Home />
+        </AuthLayout>
+      </IntroductionLayout>
       <Toast config={toastConfig} />
     </>
   );

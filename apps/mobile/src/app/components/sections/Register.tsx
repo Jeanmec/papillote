@@ -26,7 +26,6 @@ export default function Register({ onAuthSuccess }: RegisterProps) {
     if (userCreation && userCreation.access_token) {
       authService.setAccessToken(userCreation.access_token);
       setTriggerConfetti(true);
-      console.log('User created and token stored successfully');
 
       if (onAuthSuccess) {
         onAuthSuccess();

@@ -112,7 +112,6 @@ export const classes = StyleSheet.create({
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 15,
   },
 
   whiteText: {
