@@ -4,14 +4,14 @@ import { classes } from '../../styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
 import UserIdSection from '../UserIdSection';
 import MainButton from '../ui/MainButton';
-import { useAuthStore } from '../../store/authStore';
+import { useSessionStore } from '../../store/sessionStore';
 import { DevSettings } from 'react-native';
 
 export default function ProfileSection() {
-  const { removeAccessToken } = useAuthStore();
+  const { clearSession } = useSessionStore();
 
   const handleLogout = async () => {
-    removeAccessToken();
+    clearSession();
     DevSettings.reload();
   };
 

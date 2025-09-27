@@ -3,25 +3,29 @@ import { View, StyleSheet } from 'react-native';
 import IntroductionCard from '../components/IntroductionCard';
 import { storage } from '../utils/mmkv';
 
+const ConnectionCoupleImage = require('../../assets/img/connection-couple.png');
+const GiftImage = require('../../assets/img/gift.png');
+const PhoneHeartImage = require('../../assets/img/phone-heart.png');
+
 type IntroductionItem = {
-  image: number;
+  illustration: string | number | object;
   title: string;
   description: string;
 };
 
 const introductionData: IntroductionItem[] = [
   {
-    image: require('../img/connection-couple.png'),
+    illustration: ConnectionCoupleImage,
     title: 'Keep connection with loved ones',
     description: 'Stay connected with your friends and family using our app.',
   },
   {
-    image: require('../img/gift.png'),
+    illustration: GiftImage,
     title: 'Get a daily gift',
     description: 'Receive a special gift every day to brighten your mood.',
   },
   {
-    image: require('../img/phone-heart.png'),
+    illustration: PhoneHeartImage,
     title: 'Strengthen your relationship with daily attention',
     description:
       'Show your loved ones how much you care with daily check-ins and thoughtful gestures.',

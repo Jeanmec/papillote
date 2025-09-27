@@ -23,7 +23,7 @@ export default function Confetti({ trigger }: ConfettiProps) {
 
   return (
     <LottieView
-      source={require('../../assets/Confetti.json')}
+      source={require('../../assets/lottie/Confetti.json')}
       ref={confettiRef}
       style={{ position: 'absolute', zIndex: 1, width: '100%', height: '100%' }}
       loop={false}

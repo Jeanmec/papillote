@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 // @ts-expect-error - react-native-dotenv module without types
 import { BACKEND_URL } from '@env';
-import { useAuthStore } from './app/store/authStore';
+import { useSessionStore } from './app/store/sessionStore';
 import Toast from 'react-native-toast-message';
 import { ZodType } from 'zod';
 import { getZodErrorMessages } from '@papillote/validation';
@@ -16,7 +16,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      useAuthStore.getState().removeAccessToken();
+      useSessionStore.getState().clearSession();
     }
     return Promise.reject(error);
   }
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
 
 async function get<T>(url: string, schema?: ZodType<T>): Promise<T | null> {
   try {
-    const authToken = useAuthStore.getState().accessToken;
+    const authToken = useSessionStore.getState().session.accessToken;
     const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.get<{ response: T }>(
       `${BACKEND_URL}${url}`,
@@ -76,7 +76,6 @@ async function post<T, R>(
   schema?: ZodType<T>
 ): Promise<R | null> {
   try {
-    // Validation avec le schema si fourni
     if (schema) {
       try {
         schema.parse(data);
@@ -89,14 +88,14 @@ async function post<T, R>(
           Toast.show({
             type: 'error',
             text1: 'Validation Error',
-            text2: errorMessages[0], // Affiche le premier message d'erreur
+            text2: errorMessages[0],
           });
         }
         return null;
       }
     }
 
-    const authToken = useAuthStore.getState().accessToken;
+    const authToken = useSessionStore.getState().session.accessToken;
     const headers = authToken ? { Authorization: `Bearer ${authToken}` } : {};
     const response = await axiosInstance.post<{ response: R }>(
       `${BACKEND_URL}${url}`,

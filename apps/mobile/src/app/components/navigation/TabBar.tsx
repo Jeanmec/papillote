@@ -102,7 +102,6 @@ export const TabBar = memo(
             </TouchableOpacity>
           );
         })}
-        {/* Indicateur animé */}
         <Animated.View
           style={[
             styles.indicator,

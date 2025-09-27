@@ -5,17 +5,21 @@ import { secondaryColor } from '../../styles/classes';
 import Confetti from '../Confetti';
 import { useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import { login } from 'src/services/userService';
-import { useAuthStore } from '../../store/authStore';
+import { login, getProfile } from 'src/services/userService';
+import { useSessionStore } from '../../store/sessionStore';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
 
-interface LoginProps {
-  onAuthSuccess?: () => void;
-}
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-export default function Login({ onAuthSuccess }: LoginProps) {
+const SecureImageSource = require('../../../assets/img/secure.png');
+
+export default function Login() {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [password, setPassword] = useState('');
-  const { setAccessToken } = useAuthStore();
+  const { setAccessTokenSession, setUserSession } = useSessionStore();
+  const navigation = useNavigation<NavigationProp>();
 
   const handleLogin = async () => {
     const mobileId = await DeviceInfo.getUniqueId();
@@ -25,12 +29,20 @@ export default function Login({ onAuthSuccess }: LoginProps) {
     });
 
     if (loginResponse && loginResponse.access_token) {
-      setAccessToken(loginResponse.access_token);
-      setTriggerConfetti(true);
-      console.log('Login successful and token stored');
+      setAccessTokenSession(loginResponse.access_token);
 
-      if (onAuthSuccess) {
-        onAuthSuccess();
+      try {
+        const profile = await getProfile();
+        if (profile) {
+          setUserSession(profile);
+          setTriggerConfetti(true);
+          console.log('Login successful, token and user profile stored');
+          navigation.navigate('Main');
+        } else {
+          console.error('Failed to get user profile after login');
+        }
+      } catch (error) {
+        console.error('Error getting profile after login:', error);
       }
     } else {
       console.error('Login failed or no access token received');
@@ -40,11 +52,9 @@ export default function Login({ onAuthSuccess }: LoginProps) {
     <>
       <Confetti trigger={triggerConfetti} />
       <Card
-        cardData={{
-          image: require('../../img/secure.png'),
-        }}
-        onPressNext={() => handleLogin()}
-        buttonText="Login"
+        illustration={SecureImageSource}
+        onPress={() => handleLogin()}
+        buttonLabel="Login"
       >
         <View style={{ flex: 1 }}>
           <Text
@@ -75,6 +85,20 @@ export default function Login({ onAuthSuccess }: LoginProps) {
               }}
               onTextChange={(text) => setPassword(text)}
             />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Register')}
+              style={{ marginTop: 20 }}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: secondaryColor,
+                  textDecorationLine: 'underline',
+                }}
+              >
+                Pas encore de compte ? Créer un compte
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Card>

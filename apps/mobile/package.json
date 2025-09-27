@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "react-native-device-info": "^14.0.4",
-    "react-native-dotenv": "^3.4.11"
+    "react-native-dotenv": "^3.4.11",
+    "react-native-safe-area-context": "^5.6.1",
+    "react-native-screens": "^4.16.0"
   }
 }

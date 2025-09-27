@@ -5,17 +5,21 @@ import { secondaryColor } from '../../styles/classes';
 import Confetti from '../Confetti';
 import { useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import { createUser } from 'src/services/userService';
-import { useAuthStore } from '../../store/authStore';
+import { createUser, getProfile } from 'src/services/userService';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../types/navigation';
+import { useSessionStore } from 'src/app/store/sessionStore';
 
-interface RegisterProps {
-  onAuthSuccess?: () => void;
-}
+const SecureImageSource = require('../../../assets/img/secure.png');
 
-export default function Register({ onAuthSuccess }: RegisterProps) {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+export default function Register() {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [password, setPassword] = useState('');
-  const { setAccessToken } = useAuthStore();
+  const { setAccessTokenSession, setUserSession } = useSessionStore();
+  const navigation = useNavigation<NavigationProp>();
 
   const handleRegister = async () => {
     const mobileId = await DeviceInfo.getUniqueId();
@@ -25,11 +29,20 @@ export default function Register({ onAuthSuccess }: RegisterProps) {
     });
 
     if (userCreation && userCreation.access_token) {
-      setAccessToken(userCreation.access_token);
-      setTriggerConfetti(true);
+      setAccessTokenSession(userCreation.access_token);
 
-      if (onAuthSuccess) {
-        onAuthSuccess();
+      try {
+        const profile = await getProfile();
+        if (profile) {
+          setUserSession(profile);
+          setTriggerConfetti(true);
+          console.log('Registration successful, token and user profile stored');
+          navigation.navigate('Main');
+        } else {
+          console.error('Failed to get user profile after registration');
+        }
+      } catch (error) {
+        console.error('Error getting profile after registration:', error);
       }
     }
   };
@@ -38,11 +51,9 @@ export default function Register({ onAuthSuccess }: RegisterProps) {
     <>
       <Confetti trigger={triggerConfetti} />
       <Card
-        cardData={{
-          image: require('../../img/secure.png'),
-        }}
-        onPressNext={handleRegister}
-        buttonText="Create Account"
+        illustration={SecureImageSource}
+        onPress={handleRegister}
+        buttonLabel="Create Account"
       >
         <View
           style={{

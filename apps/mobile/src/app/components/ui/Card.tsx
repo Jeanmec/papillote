@@ -1,29 +1,62 @@
+import React from 'react';
 import { SafeAreaView, View, Image, StyleSheet } from 'react-native';
+import LottieView, { AnimationObject } from 'lottie-react-native';
+
 import { classes } from '../../styles/classes';
 import MainButton from './MainButton';
 
+type CardSource = string | number | object | null;
+
 type CardProps = {
-  cardData: {
-    image: number;
-  };
+  illustration: CardSource;
   children?: React.ReactNode;
-  onPressNext?: () => void | Promise<void>;
-  buttonText?: string;
+  onPress?: () => void | Promise<void>;
+  buttonLabel?: string;
 };
 
 export default function Card({
-  cardData,
-  onPressNext,
-  buttonText,
+  illustration,
+  onPress,
+  buttonLabel,
   children,
 }: CardProps) {
+  const renderIllustration = () => {
+    if (!illustration) {
+      return null;
+    }
+
+    if (typeof illustration === 'object' && illustration !== null) {
+      return (
+        <LottieView
+          source={illustration as AnimationObject}
+          style={classes.imgCard}
+          autoPlay
+          loop
+        />
+      );
+    }
+
+    if (typeof illustration === 'number' || typeof illustration === 'string') {
+      const source =
+        typeof illustration === 'string' ? { uri: illustration } : illustration;
+
+      return (
+        <Image source={source} style={classes.imgCard} resizeMode="contain" />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <SafeAreaView style={classes.container}>
-      <Image source={cardData.image} style={classes.imgCard} />
+      {renderIllustration()}
+
       {children}
-      {buttonText && onPressNext && (
+
+      {buttonLabel && onPress && (
         <View style={styles.textSection}>
-          <MainButton label={buttonText} onPress={onPressNext} />
+          <MainButton label={buttonLabel} onPress={onPress} />
         </View>
       )}
     </SafeAreaView>

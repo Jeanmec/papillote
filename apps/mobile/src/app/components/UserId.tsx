@@ -1,12 +1,12 @@
 import Tag from './ui/Tag';
-import { useAuth } from '../layouts/AuthLayout';
+import { useSession } from '../store/sessionStore';
 
 export default function UserId() {
-  const user = useAuth();
+  const session = useSession();
 
   return (
-    <Tag color="purple" copy={user?.generatedId || ''}>
-      {user?.generatedId || ''}
+    <Tag color="purple" copy={session.user?.generatedId || ''}>
+      {session.user?.generatedId || ''}
     </Tag>
   );
 }

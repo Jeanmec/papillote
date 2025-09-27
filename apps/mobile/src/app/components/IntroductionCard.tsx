@@ -1,10 +1,12 @@
-import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { classes } from '../styles/classes';
 import Card from './ui/Card';
 
+type CardSource = string | number | object | null;
+
 type IntroductionCardProps = {
   cardData: {
-    image: number;
+    illustration: CardSource;
     title: string;
     description: string;
   };
@@ -20,9 +22,9 @@ export default function IntroductionCard({
   return (
     <SafeAreaView style={classes.container}>
       <Card
-        cardData={cardData}
-        onPressNext={onPressNext}
-        buttonText={isLastCard ? 'Get Started' : 'Next'}
+        illustration={cardData.illustration}
+        onPress={onPressNext}
+        buttonLabel={isLastCard ? 'Get Started' : 'Next'}
       >
         <View style={styles.textSection}>
           {cardData.title && <Text style={styles.title}>{cardData.title}</Text>}
