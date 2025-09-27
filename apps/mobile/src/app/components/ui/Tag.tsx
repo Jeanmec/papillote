@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import Icon from 'react-native-ico-noto-emojis';
-import { classes } from 'src/app/styles/classes';
+import { classes } from '~/app/styles/classes';
 import * as Clipboard from '@react-native-clipboard/clipboard';
 
 const colors = {

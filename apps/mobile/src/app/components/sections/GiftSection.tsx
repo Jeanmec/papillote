@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native';
-import { classes } from '../../styles/classes';
+import { classes } from '~/app/styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
 
 const styles = StyleSheet.create({

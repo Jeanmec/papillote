@@ -10,7 +10,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { UserService } from './user.service';
+import { UserService } from '~/app/user/user.service';
 
 import {
   createUserSchema,
@@ -18,9 +18,9 @@ import {
   UserProfileDto,
   LoginResponseDto,
 } from '@papillote/validation';
-import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { UserEntity } from '../../entities/user.entity';
+import { ZodValidationPipe } from '~/app/pipes/zod-validation.pipe';
+import { JwtAuthGuard } from '~/app/common/jwt/jwt-auth.guard';
+import { UserEntity } from '~/entities/user.entity';
 
 @Controller('user')
 export class UserController {

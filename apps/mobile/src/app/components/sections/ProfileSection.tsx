@@ -1,10 +1,10 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native';
-import { classes } from '../../styles/classes';
+import { classes } from '~/app/styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
-import UserIdSection from '../UserIdSection';
-import MainButton from '../ui/MainButton';
-import { useSessionStore } from '../../store/sessionStore';
+import UserIdSection from '~/app/components/UserIdSection';
+import MainButton from '~/app/components/ui/MainButton';
+import { useSessionStore } from '~/app/store/sessionStore';
 import { DevSettings } from 'react-native';
 
 export default function ProfileSection() {

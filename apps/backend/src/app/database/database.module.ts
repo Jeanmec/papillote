@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { parse } from 'pg-connection-string';
-import { UserEntity } from '../../entities/user.entity';
-import { AvatarEntity } from '../../entities/avatar.entity';
+import { UserEntity } from '~/entities/user.entity';
+import { AvatarEntity } from '~/entities/avatar.entity';
 
 @Module({
   imports: [

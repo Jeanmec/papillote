@@ -1,6 +1,8 @@
 import LottieView from 'lottie-react-native';
 import { useRef, useEffect, useState } from 'react';
 
+const ConfettiLottieSource = require('~/assets/lottie/Confetti.json');
+
 interface ConfettiProps {
   trigger: boolean;
 }
@@ -23,7 +25,7 @@ export default function Confetti({ trigger }: ConfettiProps) {
 
   return (
     <LottieView
-      source={require('../../assets/lottie/Confetti.json')}
+      source={ConfettiLottieSource}
       ref={confettiRef}
       style={{ position: 'absolute', zIndex: 1, width: '100%', height: '100%' }}
       loop={false}

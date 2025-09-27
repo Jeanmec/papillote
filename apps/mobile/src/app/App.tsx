@@ -1,14 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './components/pages/Home';
+import Home from '~/app/pages/Home';
 import Toast from 'react-native-toast-message';
-import toastConfig from './config/toastConfig';
-import Login from './components/pages/Login';
-import Register from './components/pages/Register';
-import { RootStackParamList } from './types/navigation';
-import { navigationRef } from './RootNavigation';
-import { AuthNavigator } from './components/pages/AuthNavigator';
-import Error from './components/pages/Error';
+import toastConfig from '~/app/config/toastConfig';
+import Login from '~/app/pages/Login';
+import Register from '~/app/pages/Register';
+import { RootStackParamList } from '~/app/types/navigation';
+import { navigationRef } from '~/app/RootNavigation';
+import { AuthNavigator } from '~/app/pages/AuthNavigator';
+import Error from '~/app/pages/Error';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

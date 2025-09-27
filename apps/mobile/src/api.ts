@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 // @ts-expect-error - react-native-dotenv module without types
 import { BACKEND_URL } from '@env';
-import { useSessionStore } from './app/store/sessionStore';
+import { useSessionStore } from '~/app/store/sessionStore';
 import Toast from 'react-native-toast-message';
 import { ZodType } from 'zod';
 import { getZodErrorMessages } from '@papillote/validation';

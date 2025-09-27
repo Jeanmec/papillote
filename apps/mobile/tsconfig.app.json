@@ -7,7 +7,8 @@
     "baseUrl": ".",
     "paths": {
       "@papillote/validation": ["../../packages/shared/validation/src"],
-      "@papillote/types": ["../../packages/shared/types/src"]
+      "@papillote/types": ["../../packages/shared/types/src"],
+      "~/*": ["src/*"]
     },
     "jsx": "react-jsx",
     "module": "esnext",

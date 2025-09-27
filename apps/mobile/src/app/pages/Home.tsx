@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { View, Animated } from 'react-native';
-import { TabBar } from '../navigation/TabBar';
-import { SwipeableView } from '../navigation/SwipeableView';
-import GiftSection from '../sections/GiftSection';
-import ProfileSection from '../sections/ProfileSection';
+import { TabBar } from '~/app/components/navigation/TabBar';
+import { SwipeableView } from '~/app/components/navigation/SwipeableView';
+import GiftSection from '~/app/components/sections/GiftSection';
+import ProfileSection from '~/app/components/sections/ProfileSection';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);

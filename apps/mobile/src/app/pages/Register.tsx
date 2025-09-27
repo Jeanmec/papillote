@@ -1,76 +1,93 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import Card from '../ui/Card';
+import { View, Text } from 'react-native';
+import Card from '~/app/components/ui/Card';
 import { OtpInput } from 'react-native-otp-entry';
-import { secondaryColor } from '../../styles/classes';
-import Confetti from '../Confetti';
+import { secondaryColor } from '~/app/styles/classes';
+import Confetti from '~/app/components/Confetti';
 import { useState } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import { login, getProfile } from 'src/services/userService';
-import { useSessionStore } from '../../store/sessionStore';
+import { createUser, getProfile } from '~/services/userService';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types/navigation';
+import { RootStackParamList } from '~/app/types/navigation';
+import { useSessionStore } from '~/app/store/sessionStore';
+
+const SecureImageSource = require('~/assets/img/secure.png');
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const SecureImageSource = require('../../../assets/img/secure.png');
-
-export default function Login() {
+export default function Register() {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
   const [password, setPassword] = useState('');
   const { setAccessTokenSession, setUserSession } = useSessionStore();
   const navigation = useNavigation<NavigationProp>();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     const mobileId = await DeviceInfo.getUniqueId();
-    const loginResponse = await login({
+    const userCreation = await createUser({
       mobileId,
       password: Number(password),
     });
 
-    if (loginResponse && loginResponse.access_token) {
-      setAccessTokenSession(loginResponse.access_token);
+    if (userCreation && userCreation.access_token) {
+      setAccessTokenSession(userCreation.access_token);
 
       try {
         const profile = await getProfile();
         if (profile) {
           setUserSession(profile);
           setTriggerConfetti(true);
-          console.log('Login successful, token and user profile stored');
+          console.log('Registration successful, token and user profile stored');
           navigation.navigate('Main');
         } else {
-          console.error('Failed to get user profile after login');
+          console.error('Failed to get user profile after registration');
         }
       } catch (error) {
-        console.error('Error getting profile after login:', error);
+        console.error('Error getting profile after registration:', error);
       }
-    } else {
-      console.error('Login failed or no access token received');
     }
   };
+
   return (
     <>
       <Confetti trigger={triggerConfetti} />
       <Card
         illustration={SecureImageSource}
-        onPress={() => handleLogin()}
-        buttonLabel="Login"
+        onPress={handleRegister}
+        buttonLabel="Create Account"
       >
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
           <Text
             style={{
               fontWeight: 'bold',
               fontSize: 24,
               textAlign: 'center',
+              marginTop: 20,
             }}
           >
-            Login
+            Create Your Account
           </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              textAlign: 'center',
+              marginTop: 10,
+              color: '#666',
+            }}
+          >
+            Your account is linked to your device. Set a 5-digit password to
+            secure it.
+          </Text>
+
           <View
             style={{
               flex: 1,
               justifyContent: 'center',
-              alignItems: 'center',
             }}
           >
             <OtpInput
@@ -85,20 +102,6 @@ export default function Login() {
               }}
               onTextChange={(text) => setPassword(text)}
             />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Register')}
-              style={{ marginTop: 20 }}
-            >
-              <Text
-                style={{
-                  textAlign: 'center',
-                  color: secondaryColor,
-                  textDecorationLine: 'underline',
-                }}
-              >
-                Pas encore de compte ? Créer un compte
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </Card>

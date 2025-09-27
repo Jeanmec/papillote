@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { AvatarEntity } from './avatar.entity';
+import { AvatarEntity } from '~/entities/avatar.entity';
 
 @Entity('users')
 export class UserEntity {

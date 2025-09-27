@@ -6,7 +6,7 @@ import {
   ViewStyle,
   ActivityIndicator,
 } from 'react-native';
-import { primaryColor, secondaryColor } from '../../styles/classes';
+import { primaryColor, secondaryColor } from '~/app/styles/classes';
 
 type ButtonProps = {
   label: string;

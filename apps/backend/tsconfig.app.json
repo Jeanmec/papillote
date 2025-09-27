@@ -4,7 +4,10 @@
     "outDir": "dist",
     "types": ["node"],
     "rootDir": "src",
-    "baseUrl": "../../",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"]
+    },
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

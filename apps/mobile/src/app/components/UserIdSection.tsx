@@ -1,4 +1,4 @@
-import UserId from './UserId';
+import UserId from '~/app/components/UserId';
 import { Text, View } from 'react-native';
 
 export default function UserIdSection() {

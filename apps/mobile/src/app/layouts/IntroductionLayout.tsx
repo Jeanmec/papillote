@@ -1,11 +1,11 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
-import IntroductionCard from '../components/IntroductionCard';
-import { storage } from '../utils/mmkv';
+import IntroductionCard from '~/app/components/IntroductionCard';
+import { storage } from '~/app/utils/mmkv';
 
-const ConnectionCoupleImage = require('../../assets/img/connection-couple.png');
-const GiftImage = require('../../assets/img/gift.png');
-const PhoneHeartImage = require('../../assets/img/phone-heart.png');
+const ConnectionCoupleImage = require('~/app/assets/img/connection-couple.png');
+const GiftImage = require('~/app/assets/img/gift.png');
+const PhoneHeartImage = require('~/app/assets/img/phone-heart.png');
 
 type IntroductionItem = {
   illustration: string | number | object;

@@ -1,6 +1,6 @@
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
-import { classes } from '../styles/classes';
-import Card from './ui/Card';
+import { classes } from '~/app/styles/classes';
+import Card from '~/app/components/ui/Card';
 
 type CardSource = string | number | object | null;
 

@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native';
-import Card from '../ui/Card';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types/navigation';
+import { RootStackParamList } from '~/app/types/navigation';
+import Card from '~/app/components/ui/Card';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const ErrorLottieSource = require('../../../assets/lottie/error.json');
+const ErrorLottieSource = require('~/assets/lottie/error.json');
 
 export default function Error() {
   const navigation = useNavigation<NavigationProp>();

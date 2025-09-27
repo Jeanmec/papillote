@@ -1,9 +1,9 @@
 import { useEffect, useCallback } from 'react';
 import DeviceInfo from 'react-native-device-info';
-import { checkUserExistence, getProfile } from '../../../services/userService';
-import { useSessionStore, useSession } from '../../store/sessionStore';
-import { replace } from '../../RootNavigation';
-import LoadingScreen from '../LoadingScreen';
+import { checkUserExistence, getProfile } from '~/services/userService';
+import { useSessionStore, useSession } from '~/app/store/sessionStore';
+import { replace } from '~/app/RootNavigation';
+import LoadingScreen from '~/app/components/LoadingScreen';
 
 export function AuthNavigator() {
   const { setUserSession, clearSession } = useSessionStore();

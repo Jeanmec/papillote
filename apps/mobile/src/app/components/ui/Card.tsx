@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView, View, Image, StyleSheet } from 'react-native';
 import LottieView, { AnimationObject } from 'lottie-react-native';
 
-import { classes } from '../../styles/classes';
-import MainButton from './MainButton';
+import { classes } from '~/app/styles/classes';
+import MainButton from '~/app/components/ui/MainButton';
 
 type CardSource = string | number | object | null;
 

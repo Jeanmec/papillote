@@ -1,5 +1,5 @@
-import Tag from './ui/Tag';
-import { useSession } from '../store/sessionStore';
+import Tag from '~/app/components/ui/Tag';
+import { useSession } from '~/app/store/sessionStore';
 
 export default function UserId() {
   const session = useSession();
