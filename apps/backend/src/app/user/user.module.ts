@@ -7,13 +7,12 @@ import { UserEntity } from '~/entities/user.entity';
 
 import { UserController } from '~/app/user/user.controller';
 import { UserService } from '~/app/user/user.service';
-import { AvatarEntity } from '~/entities/avatar.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '~/app/common/jwt/jwt.strategy';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, AvatarEntity]),
+    TypeOrmModule.forFeature([UserEntity]),
     PassportModule,
     ConfigModule,
     JwtModule.registerAsync({

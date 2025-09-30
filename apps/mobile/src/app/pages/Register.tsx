@@ -1,15 +1,13 @@
 import { View, Text } from 'react-native';
 import Card from '~/app/components/ui/Card';
-import { OtpInput } from 'react-native-otp-entry';
-import { secondaryColor } from '~/app/styles/classes';
 import Confetti from '~/app/components/Confetti';
 import { useState } from 'react';
-import DeviceInfo from 'react-native-device-info';
 import { createUser, getProfile } from '~/services/userService';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '~/app/types/navigation';
 import { useSessionStore } from '~/app/store/sessionStore';
+import PasswordInput from '../components/ui/PasswordInput';
 
 const SecureImageSource = require('~/assets/img/secure.png');
 
@@ -17,16 +15,12 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function Register() {
   const [triggerConfetti, setTriggerConfetti] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState<string | undefined>(undefined);
   const { setAccessTokenSession, setUserSession } = useSessionStore();
   const navigation = useNavigation<NavigationProp>();
 
   const handleRegister = async () => {
-    const mobileId = await DeviceInfo.getUniqueId();
-    const userCreation = await createUser({
-      mobileId,
-      password: Number(password),
-    });
+    const userCreation = await createUser(Number(password));
 
     if (userCreation && userCreation.access_token) {
       setAccessTokenSession(userCreation.access_token);
@@ -36,7 +30,6 @@ export default function Register() {
         if (profile) {
           setUserSession(profile);
           setTriggerConfetti(true);
-          console.log('Registration successful, token and user profile stored');
           navigation.navigate('Main');
         } else {
           console.error('Failed to get user profile after registration');
@@ -90,18 +83,7 @@ export default function Register() {
               justifyContent: 'center',
             }}
           >
-            <OtpInput
-              numberOfDigits={5}
-              theme={{
-                filledPinCodeContainerStyle: { borderColor: '#e8e8e8' },
-                pinCodeContainerStyle: {
-                  borderRadius: 15,
-                  borderWidth: 3,
-                },
-                focusedPinCodeContainerStyle: { borderColor: secondaryColor },
-              }}
-              onTextChange={(text) => setPassword(text)}
-            />
+            <PasswordInput onchange={setPassword} />
           </View>
         </View>
       </Card>

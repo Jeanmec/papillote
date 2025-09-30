@@ -1,5 +1,4 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { AvatarEntity } from '~/entities/avatar.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -12,7 +11,6 @@ export class UserEntity {
   @Column()
   password!: string;
 
-  @ManyToOne(() => AvatarEntity)
-  @JoinColumn({ name: 'avatarId' })
-  avatar!: AvatarEntity;
+  @Column({ nullable: true })
+  avatar!: string;
 }

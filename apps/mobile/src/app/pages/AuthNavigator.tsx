@@ -14,8 +14,6 @@ export function AuthNavigator() {
       const mobileId = await DeviceInfo.getUniqueId();
       const exists = await checkUserExistence(mobileId);
 
-      console.log({ exists });
-
       if (exists === null || exists === undefined) {
         replace('Error');
         return;

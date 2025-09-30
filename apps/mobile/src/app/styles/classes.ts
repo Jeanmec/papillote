@@ -124,4 +124,7 @@ export const classes = StyleSheet.create({
   centerText: {
     textAlign: 'center',
   },
+  errorText: {
+    color: 'red',
+  },
 });

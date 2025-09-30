@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { View, Animated } from 'react-native';
 import { TabBar } from '~/app/components/navigation/TabBar';
 import { SwipeableView } from '~/app/components/navigation/SwipeableView';

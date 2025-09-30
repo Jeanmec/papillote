@@ -1,46 +1,41 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import Card from '~/app/components/ui/Card';
-import { primaryColor } from '~/app/styles/classes';
-import Confetti from '~/app/components/Confetti';
+import { classes } from '~/app/styles/classes';
 import { useState } from 'react';
-import { login, getProfile } from '~/services/userService';
 import { useSessionStore } from '~/app/store/sessionStore';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '~/app/types/navigation';
 import PasswordInput from '../components/ui/PasswordInput';
+import { resetUser } from '~/services/userService';
+import Toast from 'react-native-toast-message';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const SecureImageSource = require('~/assets/img/secure.png');
 
-export default function Login() {
-  const [triggerConfetti, setTriggerConfetti] = useState(false);
+export default function ForgotPassword() {
   const [password, setPassword] = useState<string | undefined>(undefined);
-  const { setAccessTokenSession, setUserSession } = useSessionStore();
   const navigation = useNavigation<NavigationProp>();
 
-  const handleLogin = async () => {
-    const loginResponse = await login(Number(password));
-
-    if (loginResponse && loginResponse.access_token) {
-      setAccessTokenSession(loginResponse.access_token);
-
-      const profile = await getProfile();
-      if (profile) {
-        setUserSession(profile);
-        setTriggerConfetti(true);
-        navigation.navigate('Main');
-      }
+  const triggerResetUser = async () => {
+    const success = await resetUser(Number(password));
+    if (success) {
+      Toast.show({
+        type: 'success',
+        text1: 'Password reset successfully',
+        text2: 'Please log in with your new password',
+      });
+      navigation.navigate('Login');
     }
   };
+
   return (
     <>
-      <Confetti trigger={triggerConfetti} />
       <Card
         illustration={SecureImageSource}
-        onPress={() => handleLogin()}
-        buttonLabel="Login"
+        onPress={() => triggerResetUser()}
+        buttonLabel="Reset my account"
       >
         <View style={{ flex: 1 }}>
           <Text
@@ -50,8 +45,20 @@ export default function Login() {
               textAlign: 'center',
             }}
           >
-            Login
+            Password forgotten?
           </Text>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 20,
+            }}
+          >
+            <Text>Resetting your password will reset your account and</Text>
+            <Text style={{ ...classes.errorText, fontWeight: 'bold' }}>
+              delete all your data.
+            </Text>
+          </View>
           <View
             style={{
               flex: 1,
@@ -61,17 +68,16 @@ export default function Login() {
           >
             <PasswordInput onchange={setPassword} />
             <TouchableOpacity
-              onPress={() => navigation.navigate('ForgotPassword')}
+              onPress={() => navigation.navigate('Login')}
               style={{ marginTop: 20 }}
             >
               <Text
                 style={{
                   textAlign: 'center',
-                  color: primaryColor,
                   textDecorationLine: 'underline',
                 }}
               >
-                Password forgotten? Reset here.
+                I remembered my password
               </Text>
             </TouchableOpacity>
           </View>

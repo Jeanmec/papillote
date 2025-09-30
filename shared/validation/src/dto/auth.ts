@@ -1,7 +1,8 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { AccessTokenSchema } from '../fields/auth.js';
+import z from 'zod';
 
-export class LoginResponseDto {
-  @IsString()
-  @IsNotEmpty()
-  access_token!: string;
-}
+export const LoginResponseSchema = z.object({
+  access_token: AccessTokenSchema,
+});
+
+export type LoginResponseDto = z.infer<typeof LoginResponseSchema>;

@@ -9,6 +9,7 @@ import { RootStackParamList } from '~/app/types/navigation';
 import { navigationRef } from '~/app/RootNavigation';
 import { AuthNavigator } from '~/app/pages/AuthNavigator';
 import Error from '~/app/pages/Error';
+import ForgotPassword from '~/app/pages/ForgotPassword';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Error" component={Error} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
       <Toast config={toastConfig} />

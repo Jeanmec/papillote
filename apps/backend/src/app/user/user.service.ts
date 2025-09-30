@@ -8,7 +8,11 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '~/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { AuthCredentialsDto, LoginResponseDto } from '@papillote/validation';
+import {
+  LoginDto,
+  LoginResponseDto,
+  ResetAccountDto,
+} from '@papillote/validation';
 
 @Injectable()
 export class UserService {
@@ -31,7 +35,7 @@ export class UserService {
     return generatedId;
   }
 
-  async signUp(body: AuthCredentialsDto): Promise<LoginResponseDto> {
+  async signUp(body: LoginDto): Promise<LoginResponseDto> {
     const { mobileId, password } = body;
 
     const generatedId = await this.getUniqueGeneratedId();
@@ -50,7 +54,7 @@ export class UserService {
     return { access_token: token };
   }
 
-  async login(body: AuthCredentialsDto): Promise<LoginResponseDto> {
+  async login(body: LoginDto): Promise<LoginResponseDto> {
     const { mobileId, password } = body;
     const user = await this.userRepository.findOne({ where: { mobileId } });
     if (!user) {
@@ -71,5 +75,24 @@ export class UserService {
   async checkUserExistence(mobileId: string): Promise<boolean> {
     const user = await this.userRepository.findOne({ where: { mobileId } });
     return !!user;
+  }
+
+  async resetUser(data: ResetAccountDto): Promise<boolean> {
+    const { mobileId, password } = data;
+
+    try {
+      const user = await this.userRepository.findOne({ where: { mobileId } });
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+
+      const hashedPassword = await bcrypt.hash(String(password), 10);
+      user.password = hashedPassword;
+      await this.userRepository.save(user);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 }

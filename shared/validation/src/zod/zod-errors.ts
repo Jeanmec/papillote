@@ -33,7 +33,6 @@ function formatZodIssue(
       }
     }
   }
-
   return errorMessage;
 }
 

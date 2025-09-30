@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { UserProfileDto } from '@papillote/validation';
+import { ClientDto } from '@papillote/validation';
 
 interface ISession {
-  user: UserProfileDto | null;
+  user: ClientDto | null;
   accessToken: string | null;
 }
 
 interface SessionState {
   session: ISession;
-  setUserSession: (user: UserProfileDto) => void;
+  setUserSession: (user: ClientDto) => void;
   setAccessTokenSession: (token: string) => void;
   clearSession: () => void;
   updateAccessToken: (token: string) => void;
@@ -20,7 +20,7 @@ export const useSessionStore = create<SessionState>((set) => ({
     accessToken: null,
   },
 
-  setUserSession: (user: UserProfileDto) => {
+  setUserSession: (user: ClientDto) => {
     set((state) => ({
       session: {
         ...state.session,

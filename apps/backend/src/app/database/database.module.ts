@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { parse } from 'pg-connection-string';
 import { UserEntity } from '~/entities/user.entity';
-import { AvatarEntity } from '~/entities/avatar.entity';
 
 @Module({
   imports: [
@@ -25,7 +24,7 @@ import { AvatarEntity } from '~/entities/avatar.entity';
           username: parsed.user,
           password: parsed.password,
           database: parsed.database,
-          entities: [UserEntity, AvatarEntity],
+          entities: [UserEntity],
           synchronize: true,
         };
       },

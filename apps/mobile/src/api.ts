@@ -1,13 +1,14 @@
 import axios, { AxiosError } from 'axios';
 // @ts-expect-error - react-native-dotenv module without types
 import { BACKEND_URL } from '@env';
-import { useSessionStore } from '~/app/store/sessionStore';
+import { useSessionStore } from './app/store/sessionStore';
 import Toast from 'react-native-toast-message';
 import { ZodType } from 'zod';
 import { getZodErrorMessages } from '@papillote/validation';
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_URL,
+  timeout: 5000,
 });
 
 console.log('API base URL:', BACKEND_URL);
@@ -58,13 +59,10 @@ async function get<T>(url: string, schema?: ZodType<T>): Promise<T | null> {
       axiosError.response?.data || axiosError.message
     );
 
-    console.log(axiosError.message);
-    console.log(axiosError.response?.data);
-
     Toast.show({
       type: 'error',
-      text1: 'An error occurred',
-      text2: 'Try again later',
+      text1: 'Network Error',
+      text2: 'An error occurred while sending the request',
     });
     return null;
   }

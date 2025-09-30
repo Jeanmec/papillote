@@ -1,26 +1,32 @@
 import {
-  IsString,
-  IsNotEmpty,
-  IsNumber,
-  ValidateNested,
-} from 'class-validator';
-import { AvatarDto } from './avatar.js';
+  AvatarSchema,
+  GeneratedIdSchema,
+  MobileIdSchema,
+  PasswordSchema,
+} from '../fields/user.js';
+import { z } from 'zod';
 
-export class UserProfileDto {
-  @IsString()
-  @IsNotEmpty()
-  generatedId!: string;
+export const CreateUserSchema = z.object({
+  mobileId: MobileIdSchema,
+  password: PasswordSchema,
+});
 
-  @ValidateNested()
-  avatar?: AvatarDto;
-}
+export const ResetAccountSchema = z.object({
+  mobileId: MobileIdSchema,
+  password: PasswordSchema,
+});
 
-export class AuthCredentialsDto {
-  @IsString()
-  @IsNotEmpty()
-  mobileId!: string;
+export const LoginSchema = z.object({
+  mobileId: MobileIdSchema,
+  password: PasswordSchema,
+});
 
-  @IsNumber()
-  @IsNotEmpty()
-  password!: number;
-}
+export const ClientSchema = z.object({
+  generatedId: GeneratedIdSchema,
+  avatar: AvatarSchema,
+});
+
+export type CreateUserDto = z.infer<typeof CreateUserSchema>;
+export type ResetAccountDto = z.infer<typeof ResetAccountSchema>;
+export type LoginDto = z.infer<typeof LoginSchema>;
+export type ClientDto = z.infer<typeof ClientSchema>;
