@@ -53,17 +53,8 @@ async function get<T>(url: string, schema?: ZodType<T>): Promise<T | null> {
 
     return response.data.response;
   } catch (error) {
-    const axiosError = error as AxiosError;
-    console.error(
-      `Error fetching ${url}:`,
-      axiosError.response?.data || axiosError.message
-    );
+    ToastError(error as AxiosError);
 
-    Toast.show({
-      type: 'error',
-      text1: 'Network Error',
-      text2: 'An error occurred while sending the request',
-    });
     return null;
   }
 }
@@ -104,20 +95,21 @@ async function post<T, R>(
     );
     return response.data.response;
   } catch (error) {
-    const axiosError = error as AxiosError;
-    console.error(
-      `Error posting to ${url}:`,
-      axiosError.response?.data || axiosError.message
-    );
-
-    Toast.show({
-      type: 'error',
-      text1: 'Network Error',
-      text2: 'An error occurred while sending the request',
-    });
-
+    ToastError(error as AxiosError);
     return null;
   }
+}
+
+function ToastError(axiosError: AxiosError) {
+  const errorMessage = (axiosError.response?.data as { message: string })
+    ?.message;
+
+  Toast.show({
+    type: 'error',
+    text1: 'Error',
+    text2:
+      String(errorMessage) || 'An error occurred while sending the request',
+  });
 }
 
 export default {

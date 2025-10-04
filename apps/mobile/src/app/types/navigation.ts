@@ -1,4 +1,6 @@
 export type RootStackParamList = {
+  MainNavigator: undefined;
+  Introduction: undefined;
   AuthNavigator: undefined;
   Main: undefined;
   Login: undefined;

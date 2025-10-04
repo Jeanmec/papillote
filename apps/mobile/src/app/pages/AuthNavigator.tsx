@@ -1,8 +1,7 @@
 import { useEffect, useCallback } from 'react';
-import DeviceInfo from 'react-native-device-info';
 import { checkUserExistence, getProfile } from '~/services/userService';
 import { useSessionStore, useSession } from '~/app/store/sessionStore';
-import { replace } from '~/app/RootNavigation';
+import { replace } from '~/app/navigation/RootNavigation';
 import LoadingScreen from '~/app/components/LoadingScreen';
 
 export function AuthNavigator() {
@@ -11,8 +10,7 @@ export function AuthNavigator() {
 
   const checkAuthStatus = useCallback(async () => {
     try {
-      const mobileId = await DeviceInfo.getUniqueId();
-      const exists = await checkUserExistence(mobileId);
+      const exists = await checkUserExistence();
 
       if (exists === null || exists === undefined) {
         replace('Error');

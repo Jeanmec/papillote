@@ -47,9 +47,8 @@ export const login = async (
   );
 };
 
-export const checkUserExistence = async (
-  mobileId: string
-): Promise<boolean | null> => {
+export const checkUserExistence = async (): Promise<boolean | null> => {
+  const mobileId = await DeviceInfo.getUniqueId();
   return await api.get<boolean>(`/user/check/${mobileId}`);
 };
 

@@ -6,10 +6,12 @@ import toastConfig from '~/app/config/toastConfig';
 import Login from '~/app/pages/Login';
 import Register from '~/app/pages/Register';
 import { RootStackParamList } from '~/app/types/navigation';
-import { navigationRef } from '~/app/RootNavigation';
+import { navigationRef } from '~/app/navigation/RootNavigation';
 import { AuthNavigator } from '~/app/pages/AuthNavigator';
+import Introduction from '~/app/pages/Introduction';
 import Error from '~/app/pages/Error';
 import ForgotPassword from '~/app/pages/ForgotPassword';
+import MainNavigator from '~/app/pages/MainNavigator';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -22,9 +24,11 @@ export default function App() {
             headerShown: false,
             animation: 'fade',
           }}
-          initialRouteName="AuthNavigator"
+          initialRouteName="MainNavigator"
         >
+          <Stack.Screen name="MainNavigator" component={MainNavigator} />
           <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
+          <Stack.Screen name="Introduction" component={Introduction} />
           <Stack.Screen name="Main" component={Home} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
