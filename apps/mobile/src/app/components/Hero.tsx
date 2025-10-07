@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 72,
     fontFamily: 'Huglove',
-    marginTop: 40,
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
     textAlign: 'center',
   },
 });

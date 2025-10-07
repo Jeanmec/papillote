@@ -21,11 +21,6 @@ export default function ProfileSection() {
         style={classes.scrollContainer}
         contentContainerStyle={classes.contentContainer}
       >
-        <View style={classes.pageHeader}>
-          <Icon name="bust-in-silhouette" height={32} width={32} />
-          <Text style={classes.pageTitle}>Profile</Text>
-        </View>
-
         <View style={[classes.centeredCard, styles.profileCard]}>
           <View style={classes.avatar}>
             <Icon name="technologist" height={32} width={32} />

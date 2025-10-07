@@ -23,12 +23,10 @@ export const SwipeableView = memo(
 
     useEffect(() => {
       if (scrollViewRef.current && activeIndex > 0) {
-        setTimeout(() => {
-          scrollViewRef.current?.scrollTo({
-            x: activeIndex * screenWidth,
-            animated: false,
-          });
-        }, 0);
+        scrollViewRef.current?.scrollTo({
+          x: activeIndex * screenWidth,
+          animated: false,
+        });
       }
     }, []);
 

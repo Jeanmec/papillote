@@ -43,11 +43,6 @@ export default function GiftSection() {
         style={classes.scrollContainer}
         contentContainerStyle={classes.contentContainer}
       >
-        <View style={classes.pageHeader}>
-          <Icon name="wrapped-gift" height={32} width={32} />
-          <Text style={classes.pageTitle}>Daily Gift</Text>
-        </View>
-
         <View style={[classes.centeredCard, styles.dailyGiftCard]}>
           <Icon
             name="party-popper"
