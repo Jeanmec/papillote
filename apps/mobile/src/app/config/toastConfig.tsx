@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderColor: '#D92D20',
     borderWidth: 1,
     borderRadius: 8,
-    zIndex: 9999,
+    zIndex: 999,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,

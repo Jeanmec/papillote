@@ -11,7 +11,7 @@ export default function UserIdSection() {
         gap: 5,
       }}
     >
-      <Text>User ID:</Text>
+      <Text>Profile ID:</Text>
       <UserId />
     </View>
   );

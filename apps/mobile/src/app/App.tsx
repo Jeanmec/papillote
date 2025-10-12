@@ -12,31 +12,37 @@ import Introduction from '~/app/pages/Introduction';
 import Error from '~/app/pages/Error';
 import ForgotPassword from '~/app/pages/ForgotPassword';
 import MainNavigator from '~/app/pages/MainNavigator';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            animation: 'fade',
-          }}
-          initialRouteName="MainNavigator"
-        >
-          <Stack.Screen name="MainNavigator" component={MainNavigator} />
-          <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
-          <Stack.Screen name="Introduction" component={Introduction} />
-          <Stack.Screen name="Main" component={Home} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Error" component={Error} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Toast config={toastConfig} />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                animation: 'fade',
+              }}
+              initialRouteName="MainNavigator"
+            >
+              <Stack.Screen name="MainNavigator" component={MainNavigator} />
+              <Stack.Screen name="AuthNavigator" component={AuthNavigator} />
+              <Stack.Screen name="Introduction" component={Introduction} />
+              <Stack.Screen name="Main" component={Home} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Error" component={Error} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </BottomSheetModalProvider>
+        <Toast config={toastConfig} />
+      </GestureHandlerRootView>
     </>
   );
 }

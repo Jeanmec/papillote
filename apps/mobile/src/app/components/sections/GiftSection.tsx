@@ -1,7 +1,16 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { SafeAreaView } from 'react-native';
+import { useState } from 'react';
 import { classes } from '~/app/styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
+import LinkRequest from '../Link/LinkRequest';
 
 const styles = StyleSheet.create({
   dailyGiftCard: {
@@ -34,9 +43,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
   },
+  LinkRequestCard: {
+    backgroundColor: '#00b894',
+  },
+  linkButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    marginTop: 15,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  linkButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
 });
 
 export default function GiftSection() {
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+
+  const handleLinkSuccess = () => {
+    Alert.alert(
+      'Demande envoyée !',
+      "Votre demande de liaison a été envoyée. L'autre personne doit maintenant l'accepter.",
+      [{ text: 'OK' }]
+    );
+  };
+
   return (
     <SafeAreaView style={[classes.container]}>
       <ScrollView
@@ -54,6 +91,20 @@ export default function GiftSection() {
           <Text style={styles.giftDescription}>
             Félicitations ! Vous avez reçu un cadeau spécial aujourd'hui.
           </Text>
+        </View>
+
+        <View style={[classes.centeredCard, styles.LinkRequestCard]}>
+          <Icon name="link" height={48} width={48} style={styles.giftIcon} />
+          <Text style={styles.giftTitle}>Se lier à une personne</Text>
+          <Text style={styles.giftDescription}>
+            Connect with someone using their profile ID.
+          </Text>
+          <TouchableOpacity
+            style={styles.linkButton}
+            onPress={() => setIsBottomSheetVisible(true)}
+          >
+            <Text style={styles.linkButtonText}>Connect to someone</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={[classes.sectionCard, styles.nextGiftsCard]}>
@@ -89,6 +140,12 @@ export default function GiftSection() {
           </View>
         </View>
       </ScrollView>
+
+      <LinkRequest
+        visible={isBottomSheetVisible}
+        onClose={() => setIsBottomSheetVisible(false)}
+        onSuccess={handleLinkSuccess}
+      />
     </SafeAreaView>
   );
 }

@@ -11,8 +11,6 @@ const axiosInstance = axios.create({
   timeout: 5000,
 });
 
-console.log('API base URL:', BACKEND_URL);
-
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -53,6 +51,7 @@ async function get<T>(url: string, schema?: ZodType<T>): Promise<T | null> {
 
     return response.data.response;
   } catch (error) {
+    console.log({ error });
     ToastError(error as AxiosError);
 
     return null;
@@ -107,8 +106,9 @@ function ToastError(axiosError: AxiosError) {
   Toast.show({
     type: 'error',
     text1: 'Error',
-    text2:
-      String(errorMessage) || 'An error occurred while sending the request',
+    text2: errorMessage
+      ? String(errorMessage)
+      : 'An error occurred while sending the request',
   });
 }
 

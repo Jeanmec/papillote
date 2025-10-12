@@ -4,6 +4,7 @@ import { classes } from '~/app/styles/classes';
 import Icon from 'react-native-ico-noto-emojis';
 import UserIdSection from '~/app/components/UserIdSection';
 import MainButton from '~/app/components/ui/MainButton';
+import LinkList from '~/app/components/Link/LinkList';
 import { useSessionStore } from '~/app/store/sessionStore';
 import { DevSettings } from 'react-native';
 
@@ -28,6 +29,8 @@ export default function ProfileSection() {
           <UserIdSection />
           <Text style={styles.memberSince}>Membre depuis aujourd'hui</Text>
         </View>
+
+        <LinkList />
 
         <View
           style={[
